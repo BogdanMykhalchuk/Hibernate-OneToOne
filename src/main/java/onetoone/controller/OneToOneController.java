@@ -3,8 +3,10 @@ package onetoone.controller;
 import lombok.RequiredArgsConstructor;
 import onetoone.domain.biderectional.ChildBi1;
 import onetoone.domain.biderectional.ChildBi2;
+import onetoone.domain.biderectional.ChildBi3;
 import onetoone.domain.biderectional.ParentBi1;
 import onetoone.domain.biderectional.ParentBi2;
+import onetoone.domain.biderectional.ParentBi3;
 import onetoone.domain.uniderectional.ChildUni;
 import onetoone.domain.uniderectional.ParentUni;
 import onetoone.service.OneToOneService;
@@ -137,6 +139,71 @@ public class OneToOneController {
         service.deleteParentBi2(parentId);
     }
 
+
+
+
+
+
+    //              Bidirectional - 3
+
+    @GetMapping("/create-bi-3")
+    private void createBi3()  {
+        service.createBi3();
+    }
+
+    @GetMapping("/create-parent-bi-3")
+    private void createParentBi3()  {
+        ParentBi3 parentBi3 = service.createParentBi3();
+        service.createChildBi3(parentBi3);
+    }
+
+    @GetMapping("/get-child-by-parent-bi-3/{parentId}")
+    public void getChildByParentBi3(@PathVariable Long parentId) {
+        service.getChildByParentBi3(parentId);
+    }
+
+    @GetMapping("/get-parent-by-child-bi-3/{childId}")
+    public void getParentByChildBi3(@PathVariable Long childId) {
+        service.getParentByChildBi3(childId);
+    }
+
+    @GetMapping("/get-all-parents-bi-3")
+    public void getParentsBi3() {
+        List<ParentBi3> parents = service.getParentsBi3();
+        parents.forEach(a -> System.out.println(a.getName()));
+    }
+
+    @GetMapping("/get-all-children-bi-3")
+    public void getChildrenBi3() {
+        List<ChildBi3> parents = service.getChildrenBi3();
+        parents.forEach(a -> System.out.println(a.getName()));
+    }
+
+    @GetMapping("/update-child-bi-3/{childId}")
+    public void updateChildrenBi3(@PathVariable Long childId) {
+        service.updateChildrenBi3(childId);
+    }
+
+    @GetMapping("/update-parent-bi-3/{parentId}")
+    public void updateParentBi3(@PathVariable Long parentId) {
+        service.updateParentBi3(parentId);
+    }
+
+    @GetMapping("/update-correct-parent-bi-3/{parentId}")
+    public void correctUpdateParentBi3(@PathVariable Long parentId) {
+        service.deleteChildBeforeUpdateBi3(parentId);
+        service.correctUpdateParentBi3(parentId);
+    }
+
+    @GetMapping("/delete-child-bi-3/{childId}")
+    public void deleteChildrenBi3(@PathVariable Long childId) {
+        service.deleteChildBi3(childId);
+    }
+
+    @GetMapping("/delete-parent-bi-3/{parentId}")
+    public void deleteParentBi3(@PathVariable Long parentId) {
+        service.deleteParentBi3(parentId);
+    }
 
 
 

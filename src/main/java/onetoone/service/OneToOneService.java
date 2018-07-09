@@ -3,13 +3,17 @@ package onetoone.service;
 import lombok.RequiredArgsConstructor;
 import onetoone.domain.biderectional.ChildBi1;
 import onetoone.domain.biderectional.ChildBi2;
+import onetoone.domain.biderectional.ChildBi3;
 import onetoone.domain.biderectional.ParentBi1;
 import onetoone.domain.biderectional.ParentBi2;
+import onetoone.domain.biderectional.ParentBi3;
 import onetoone.domain.uniderectional.ChildUni;
 import onetoone.domain.uniderectional.ParentUni;
 import onetoone.repository.ChildBi1Repository;
 import onetoone.repository.ChildBi2Repository;
+import onetoone.repository.ChildBi3Repository;
 import onetoone.repository.ChildUniRepository;
+import onetoone.repository.ParentBi3Repository;
 import onetoone.repository.ParentBi1Repository;
 import onetoone.repository.ParentBi2Repository;
 import onetoone.repository.ParentUniRepository;
@@ -25,9 +29,11 @@ import java.util.List;
 public class OneToOneService {
     private final ChildBi1Repository childBi1Repository;
     private final ChildBi2Repository childBi2Repository;
+    private final ChildBi3Repository childBi3Repository;
     private final ChildUniRepository childUniRepository;
     private final ParentBi1Repository parentBi1Repository;
     private final ParentBi2Repository parentBi2Repository;
+    private final ParentBi3Repository parentBi3Repository;
     private final ParentUniRepository parentUniRepository;
 
 
@@ -43,6 +49,9 @@ public class OneToOneService {
     public ChildBi2 createChild(ChildBi2 child) {
         return childBi2Repository.save(child);
     }
+    public ChildBi3 createChild(ChildBi3 child) {
+        return childBi3Repository.save(child);
+    }
     public ParentUni createParent(ParentUni parent) {
         return parentUniRepository.save(parent);
     }
@@ -51,6 +60,9 @@ public class OneToOneService {
     }
     public ParentBi2 createParent(ParentBi2 parent) {
         return parentBi2Repository.save(parent);
+    }
+    public ParentBi3 createParent(ParentBi3 parent) {
+        return parentBi3Repository.save(parent);
     }
 
 
@@ -66,6 +78,9 @@ public class OneToOneService {
     public ChildBi2 getChildBi2(Long id) {
         return childBi2Repository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
+    public ChildBi3 getChildBi3(Long id) {
+        return childBi3Repository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
     public ParentUni getParentUni(Long id) {
         return parentUniRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
@@ -74,6 +89,9 @@ public class OneToOneService {
     }
     public ParentBi2 getParentBi2(Long id) {
         return parentBi2Repository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
+    public ParentBi3 getParentBi3(Long id) {
+        return parentBi3Repository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
 
@@ -86,6 +104,9 @@ public class OneToOneService {
     public List<ChildBi2> getChildrenBi2() {
         return childBi2Repository.findAll();
     }
+    public List<ChildBi3> getChildrenBi3() {
+        return childBi3Repository.findAll();
+    }
     public List<ParentUni> getParentsUni() {
         return parentUniRepository.findAll();
     }
@@ -94,6 +115,9 @@ public class OneToOneService {
     }
     public List<ParentBi2> getParentsBi2() {
         return parentBi2Repository.findAll();
+    }
+    public List<ParentBi3> getParentsBi3() {
+        return parentBi3Repository.findAll();
     }
 
 
@@ -109,6 +133,9 @@ public class OneToOneService {
     public ChildBi2 updateChild(ChildBi2 child) {
         return childBi2Repository.save(child);
     }
+    public ChildBi3 updateChild(ChildBi3 child) {
+        return childBi3Repository.save(child);
+    }
     public ParentUni updateParent(ParentUni parent) {
         return parentUniRepository.save(parent);
     }
@@ -117,6 +144,9 @@ public class OneToOneService {
     }
     public ParentBi2 updateParent(ParentBi2 parent) {
         return parentBi2Repository.save(parent);
+    }
+    public ParentBi3 updateParent(ParentBi3 parent) {
+        return parentBi3Repository.save(parent);
     }
 
 
@@ -130,6 +160,9 @@ public class OneToOneService {
     public void deleteChildBi2(Long id) {
         childBi2Repository.deleteById(id);
     }
+    public void deleteChildBi3(Long id) {
+        childBi3Repository.deleteById(id);
+    }
     public void deleteParentUni(Long id) {
         parentUniRepository.deleteById(id);
     }
@@ -137,6 +170,7 @@ public class OneToOneService {
         parentBi1Repository.deleteById(id);
     }
     public void deleteParentBi2(Long id) {parentBi2Repository.deleteById(id);}
+    public void deleteParentBi3(Long id) {parentBi3Repository.deleteById(id);}
 
 
     //              Bidirectional - 1
@@ -241,11 +275,79 @@ public class OneToOneService {
         newChild.setParent(parent);
         createChild(newChild);
     }
+
     
     
     
     
     
+    
+    //              Bidirectional - 3
+
+    public void createBi3() {
+        ParentBi3 parent =  new ParentBi3();
+        parent.setName("Petro");
+        ChildBi3 child  = new ChildBi3();
+        child.setName("Petrovich");
+        child.setParent(parent);
+        parent.setChild(child);
+        createParent(parent);
+    }
+
+    public ParentBi3 createParentBi3() {
+        ParentBi3 parent =  new ParentBi3();
+        parent.setName("Petro");
+        return createParent(parent);
+    }
+
+    public void createChildBi3(ParentBi3 parent) {
+        ChildBi3 child  = new ChildBi3();
+        child.setName("Petrovich");
+        child.setParent(parent);
+        parent.setChild(child);
+        createChild(child);
+        updateParent(parent);
+    }
+
+    public void getChildByParentBi3(Long parentId) {
+        ParentBi3 parent = getParentBi3(parentId);
+    }
+
+    public void getParentByChildBi3(Long childId) {
+        ChildBi3 child = getChildBi3(childId);
+    }
+
+    public void updateChildrenBi3(Long id) {
+        ChildBi3 child = getChildBi3(id);
+        child.setName("Grigorovich");
+        updateChild(child);
+    }
+
+    public void updateParentBi3(Long id) {
+        ParentBi3 parent = getParentBi3(id);
+        ChildBi3 child = new ChildBi3();
+        child.setName("Vasyliovych");
+        parent.setChild(child);
+        updateParent(parent);
+    }
+
+    public void deleteChildBeforeUpdateBi3(Long id) {
+        childBi3Repository.deleteById(id);
+    }
+
+    public void correctUpdateParentBi3(Long id) {
+        ParentBi3 parent = getParentBi3(id);
+        ChildBi3 newChild = new ChildBi3();
+        newChild.setName("Vasyliovych");
+        newChild.setParent(parent);
+        createChild(newChild);
+    }
+
+
+
+
+
+
     //  Unidirectional
 
     public void createUni() {
